@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)http://devincubator.by/valleyp2.html -->
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <script
+      src="./LogicPart_files/aa7a31f950.js.Без названия"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="./LogicPart_files/free.min.css" media="all" />
+    <link
+      rel="stylesheet"
+      href="./LogicPart_files/free-v4-font-face.min.css"
+      media="all"
+    />
+    <link
+      rel="stylesheet"
+      href="./LogicPart_files/free-v4-shims.min.css"
+      media="all"
+    />
+    <script
+      src="https://kit.fontawesome.com/1250bd4823.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .wrapper {
+        min-height: calc(100vh - 15px);
+        margin: 15px auto 0;
+      }
+      .list-group-item.completed {
+        background-color: rgb(8, 199, 8);
+      }
+    </style>
+    <title>LogicPart</title>
+  </head>
+  <body>
+    <div class="container-fluid wrapper">
+      <nav class="navbar navbar-light bg-light">
+        <h1>MyToDoList</h1>
+        <div class="d-flex">
+          <button type="button" class="btn btn-primary mx-2" id="fromGreat">
+            <i class="fa fa-sort-numeric-up-alt" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-primary" id="fromSmall">
+            <i class="fa fa-sort-numeric-up" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="d-flex">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            id="createNewTask"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Add task
+          </button>
+          <div class="dropdown ml-2">
+            <button
+              class="btn btn-primary"
+              type="button"
+              id="dropdownMenuSettings"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fa fa-cog" aria-hidden="true"></i>
+            </button>
+            <div
+              class="dropdown-menu p-2 dropdown-menu-right"
+              aria-labelledby="dropdownMenuSettings"
+            >
+              You should add settings here
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="row justify-content-center">
+        <div class="col-10">
+          <h3 class="my-2" id="numberOfNotCompletedTusks"></h3>
+          <ul
+            class="list-group flex-wrap justify-content-between"
+            id="currentTasks"
+          ></ul>
+          <hr />
+          <h3 class="my-2" id="numberOfCompletedTusks"></h3>
+          <ul
+            class="list-group flex-wrap justify-content-between"
+            id="completedTasks"
+          ></ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add task</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="addTaskForm">
+              <div class="form-group row">
+                <label for="inputTitle" class="col-sm-2 col-form-label"
+                  >Title</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputTitle"
+                    placeholder="Title"
+                    required=""
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="inputText" class="col-sm-2 col-form-label"
+                  >Text</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputText"
+                    placeholder="Text"
+                    required=""
+                  />
+                </div>
+              </div>
+              <fieldset class="form-group">
+                <div class="row">
+                  <legend class="col-form-label col-sm-2 pt-0">Priority</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gridRadios"
+                        id="Low"
+                        value="Low"
+                        required=""
+                      />
+                      <label class="form-check-label" for="Low"> Low </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gridRadios"
+                        id="Medium"
+                        value="Medium"
+                      />
+                      <label class="form-check-label" for="Medium">
+                        Medium
+                      </label>
+                    </div>
+                    <div class="form-check disabled">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="gridRadios"
+                        id="High"
+                        value="High"
+                      />
+                      <label class="form-check-label" for="High"> High </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <div class="form-group row">
+                <div class="col-sm-12 text-center">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <button type="submit" class="btn btn-primary" id="addTask">
+                    Add task
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="./js/index.js"></script>
+  </body>
+</html>
