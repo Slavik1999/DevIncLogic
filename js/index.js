@@ -56,7 +56,7 @@ const getCounter = () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   if (localStorage.getItem("style")) {
-    let href = JSON.parse();
+    let href = JSON.parse(localStorage.getItem("style"));
     styles.href = href;
     if (href.includes("black")) {
       dark.setAttribute("checked", "true");
