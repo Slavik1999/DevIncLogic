@@ -55,12 +55,14 @@ const getCounter = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  let href = JSON.parse(localStorage.getItem("style"));
-  styles.href = href;
-  if (href.includes("black")) {
-    dark.setAttribute("checked", "true");
-  } else {
-    light.setAttribute("checked", "true");
+  if (localStorage.getItem("style")) {
+    let href = JSON.parse();
+    styles.href = href;
+    if (href.includes("black")) {
+      dark.setAttribute("checked", "true");
+    } else {
+      light.setAttribute("checked", "true");
+    }
   }
 
   if (localStorage.getItem("todo")) {
