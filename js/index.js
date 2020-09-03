@@ -16,6 +16,24 @@ let numberOfNotCompletedTusks = document.getElementById(
 );
 let numberOfCompletedTusks = document.getElementById("numberOfCompletedTusks");
 
+let styles = document.getElementById("styles");
+
+let light = document.getElementById("optionLight");
+let dark = document.getElementById("optionDark");
+
+let todoColor = document.getElementById("todoColor");
+
+light.addEventListener("click", () => {
+  let href = "./css/light.css";
+  styles.href = href;
+  localStorage.setItem("style", JSON.stringify(href));
+});
+dark.addEventListener("click", () => {
+  let href = "./css/black.css";
+  styles.href = href;
+  localStorage.setItem("style", JSON.stringify(href));
+});
+
 let id = 0;
 let edit = false;
 let editId;
@@ -37,14 +55,24 @@ const getCounter = () => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  let href = JSON.parse(localStorage.getItem("style"));
+  styles.href = href;
+  if (href.includes("black")) {
+    dark.setAttribute("checked", "true");
+  } else {
+    light.setAttribute("checked", "true");
+  }
+
   if (localStorage.getItem("todo")) {
     todoList = JSON.parse(localStorage.getItem("todo"));
   }
+
   fromGreat.addEventListener("click", () => {
     todoList.sort(function (a, b) {
       return new Date(b.date) - new Date(a.date);
     });
     printTasks();
+    printColor();
     printCompletedTasks();
     editItem();
     deletItem();
@@ -57,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return new Date(a.date) - new Date(b.date);
     });
     printTasks();
+    printColor();
     printCompletedTasks();
     editItem();
     deletItem();
@@ -66,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   printTasks();
+  printColor();
   printCompletedTasks();
   setEventToRadio(low);
   setEventToRadio(high);
@@ -88,10 +118,12 @@ addTaskForm.addEventListener("submit", (ev) => {
         todo.priority = priority ? priority : todo.priority;
         todo.date = formatDate(new Date());
         todo.id = editId;
+        todo.color = todoColor.value;
       }
       return todo;
     });
     printTasks();
+    printColor();
     printCompletedTasks();
     editItem();
     deletItem();
@@ -102,6 +134,7 @@ addTaskForm.addEventListener("submit", (ev) => {
     let newTodo = {
       title: inputTitle.value,
       body: inputText.value,
+      color: todoColor.value,
       completed: false,
       priority,
       date: formatDate(new Date()),
@@ -110,6 +143,7 @@ addTaskForm.addEventListener("submit", (ev) => {
 
     writingTodo(newTodo);
     printTasks();
+    printColor();
     printCompletedTasks();
     editItem();
     deletItem();
@@ -186,7 +220,6 @@ const printTasks = () => {
                 </div>
               </li>`;
     }
-
     currentTasks.innerHTML = printTasks;
 
     id = index + 1;
@@ -257,6 +290,14 @@ const deleteInputsValue = () => {
   high.checked = false;
 };
 
+const printColor = () => {
+  todoList.map((todo) => {
+    if (!todo.completed) {
+      document.getElementById(todo.id).style.backgroundColor = todo.color;
+    }
+  });
+};
+
 const deletItem = () => {
   todoList.map((todo) => {
     getDeleteEvent(todo.id);
@@ -274,24 +315,6 @@ const completeItem = () => {
     getCompleteEvent(todo);
   });
 };
-
-// const getCompleteEvent = (todos) => {
-//   document
-//     .getElementById(`completeButton${todos.id}`)
-//     .addEventListener("click", () => {
-//       document.getElementById(todos.id).classList.add("active");
-//       todoList.map((todo) => {
-//         if (todo.id === todos.id) {
-//           todo.completed = true;
-//         }
-
-//         return todo;
-//       });
-//       document.getElementById(todos.id).remove();
-//       printTasks();
-//       localStorage.setItem("todo", JSON.stringify(todoList));
-//     });
-// };
 
 const getCompleteEvent = (todos) => {
   document
@@ -329,11 +352,13 @@ const getEditEvent = (todo) => {
     .getElementById(`editButton${todo.id}`)
     .addEventListener("click", () => {
       createNewTask.click();
+
       inputTitle.value = todo.title;
       inputText.value = todo.body;
       low.checked = todo.priority === "Low" ? true : false;
       medium.checked = todo.priority === "Medium" ? true : false;
       high.checked = todo.priority === "High" ? true : false;
+      todoColor.value = todo.color;
       editId = todo.id;
       edit = true;
     });
