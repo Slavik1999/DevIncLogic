@@ -76,9 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     printTasks();
     printColor();
     printCompletedTasks();
-    editItem();
-    deletItem();
-    completeItem();
+    addEventsForItems();
     fromGreat.setAttribute("disabled", true);
     fromSmall.removeAttribute("disabled");
   });
@@ -89,9 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     printTasks();
     printColor();
     printCompletedTasks();
-    editItem();
-    deletItem();
-    completeItem();
+    addEventsForItems();
     fromSmall.setAttribute("disabled", true);
     fromGreat.removeAttribute("disabled");
   });
@@ -102,9 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setEventToRadio(low);
   setEventToRadio(high);
   setEventToRadio(medium);
-  editItem();
-  deletItem();
-  completeItem();
+  addEventsForItems();
   getCounter();
 });
 
@@ -127,9 +121,7 @@ addTaskForm.addEventListener("submit", (ev) => {
     printTasks();
     printColor();
     printCompletedTasks();
-    editItem();
-    deletItem();
-    completeItem();
+    addEventsForItems();
     edit = false;
     localStorage.setItem("todo", JSON.stringify(todoList));
   } else {
@@ -147,9 +139,7 @@ addTaskForm.addEventListener("submit", (ev) => {
     printTasks();
     printColor();
     printCompletedTasks();
-    editItem();
-    deletItem();
-    completeItem();
+    addEventsForItems();
     localStorage.setItem("todo", JSON.stringify(todoList));
   }
   getCounter();
@@ -300,20 +290,10 @@ const printColor = () => {
   });
 };
 
-const deletItem = () => {
-  todoList.map((todo) => {
-    getDeleteEvent(todo.id);
-  });
-};
-
-const editItem = () => {
+const addEventsForItems = () => {
   todoList.map((todo) => {
     getEditEvent(todo);
-  });
-};
-
-const completeItem = () => {
-  todoList.map((todo) => {
+    getDeleteEvent(todo.id);
     getCompleteEvent(todo);
   });
 };
@@ -332,7 +312,7 @@ const getCompleteEvent = (todos) => {
       });
       document.getElementById(todos.id).remove();
       printCompletedTasks();
-      deletItem();
+      addEventsForItems();
       getCounter();
       localStorage.setItem("todo", JSON.stringify(todoList));
     });
@@ -342,7 +322,9 @@ const getDeleteEvent = (idItem) => {
   document
     .getElementById(`deleteButton${idItem}`)
     .addEventListener("click", () => {
-      document.getElementById(idItem).remove();
+      if (document.getElementById(idItem)) {
+        document.getElementById(idItem).remove();
+      }
       let newTodoList = todoList.filter((todo) => todo.id !== idItem);
       todoList = newTodoList;
       localStorage.setItem("todo", JSON.stringify(todoList));
