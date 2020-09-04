@@ -1,67 +1,81 @@
-let createNewTask = document.getElementById("createNewTask");
+let addNewTaskButton = document.getElementById("createNewTask");
+
 let inputTitle = document.getElementById("inputTitle");
 let inputText = document.getElementById("inputText");
-let low = document.getElementById("Low");
-let medium = document.getElementById("Medium");
-let high = document.getElementById("High");
+let lowRadioButton = document.getElementById("Low");
+let mediumRadioButton = document.getElementById("Medium");
+let highRadioButton = document.getElementById("High");
+let inputColor = document.getElementById("todoColor");
+
 let addTaskForm = document.getElementById("addTaskForm");
+let closeFormButton = document.querySelector(".close");
+
 let currentTasks = document.getElementById("currentTasks");
-let closeButton = document.querySelector(".close");
-let addButton = document.getElementById("addTask");
 let completedTasks = document.getElementById("completedTasks");
-let fromGreat = document.getElementById("fromGreat");
-let fromSmall = document.getElementById("fromSmall");
+
+let sortFromBiggestButon = document.getElementById("fromGreat");
+let sortFromSmallestButton = document.getElementById("fromSmall");
 let numberOfNotCompletedTusks = document.getElementById(
   "numberOfNotCompletedTusks"
 );
 let numberOfCompletedTusks = document.getElementById("numberOfCompletedTusks");
 
-let styles = document.getElementById("styles");
+let documentStylesLink = document.getElementById("styles");
 
-let light = document.getElementById("optionLight");
-let dark = document.getElementById("optionDark");
+let lightThemeButton = document.getElementById("optionLight");
+let darkThemeButton = document.getElementById("optionDark");
 
-let todoColor = document.getElementById("todoColor");
-
-light.addEventListener("click", () => {
-  let href = "./css/light.css";
-  styles.href = href;
-  localStorage.setItem("style", JSON.stringify(href));
-});
-dark.addEventListener("click", () => {
-  let href = "./css/black.css";
-  styles.href = href;
-  localStorage.setItem("style", JSON.stringify(href));
-});
-
-let id = 0;
-let edit = false;
-let editId;
+let todoId = 0;
+let editMode = false;
+let idOfEditItem;
 let todoList = [];
 let priority = "";
 
-const getCounter = () => {
-  let counterNotCompleted = 0;
-  let counterCompleted = 0;
-  todoList.map((todo) => {
-    if (todo.completed) {
-      counterCompleted++;
-    } else {
-      counterNotCompleted++;
-    }
+addNewTaskButton.addEventListener("click", () => {
+  if (editMode) {
+    editMode = false;
+  }
+  deleteInputsValue();
+});
+
+lightThemeButton.addEventListener("click", () => {
+  let href = "./css/light.css";
+  setLocalStorageTheme(href);
+});
+
+darkThemeButton.addEventListener("click", () => {
+  let href = "./css/black.css";
+  setLocalStorageTheme(href);
+});
+
+sortFromBiggestButon.addEventListener("click", () => {
+  todoList.sort(function (a, b) {
+    return new Date(b.date) - new Date(a.date);
   });
-  numberOfNotCompletedTusks.innerHTML = `ToDo(${counterNotCompleted})`;
-  numberOfCompletedTusks.innerHTML = `Completed(${counterCompleted})`;
-};
+
+  addEventsForItems();
+  sortFromBiggestButon.setAttribute("disabled", true);
+  sortFromSmallestButton.removeAttribute("disabled");
+});
+
+sortFromSmallestButton.addEventListener("click", () => {
+  todoList.sort(function (a, b) {
+    return new Date(a.date) - new Date(b.date);
+  });
+
+  addEventsForItems();
+  sortFromSmallestButton.setAttribute("disabled", true);
+  sortFromBiggestButon.removeAttribute("disabled");
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   if (localStorage.getItem("style")) {
     let href = JSON.parse(localStorage.getItem("style"));
-    styles.href = href;
+    documentStylesLink.href = href;
     if (href.includes("black")) {
-      dark.setAttribute("checked", "true");
+      darkThemeButton.setAttribute("checked", "true");
     } else {
-      light.setAttribute("checked", "true");
+      lightThemeButton.setAttribute("checked", "true");
     }
   }
 
@@ -69,35 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
     todoList = JSON.parse(localStorage.getItem("todo"));
   }
 
-  fromGreat.addEventListener("click", () => {
-    todoList.sort(function (a, b) {
-      return new Date(b.date) - new Date(a.date);
-    });
-    printTasks();
-    printColor();
-    printCompletedTasks();
-    addEventsForItems();
-    fromGreat.setAttribute("disabled", true);
-    fromSmall.removeAttribute("disabled");
-  });
-  fromSmall.addEventListener("click", () => {
-    todoList.sort(function (a, b) {
-      return new Date(a.date) - new Date(b.date);
-    });
-    printTasks();
-    printColor();
-    printCompletedTasks();
-    addEventsForItems();
-    fromSmall.setAttribute("disabled", true);
-    fromGreat.removeAttribute("disabled");
-  });
-
-  printTasks();
-  printColor();
-  printCompletedTasks();
-  setEventToRadio(low);
-  setEventToRadio(high);
-  setEventToRadio(medium);
+  setEventsToRadioButtons();
   addEventsForItems();
   getCounter();
 });
@@ -105,44 +91,38 @@ document.addEventListener("DOMContentLoaded", () => {
 addTaskForm.addEventListener("submit", (ev) => {
   ev.preventDefault();
 
-  if (edit) {
+  if (editMode) {
     todoList.map((todo) => {
-      if (todo.id === editId) {
+      if (todo.id === idOfEditItem) {
         todo.title = inputTitle.value;
         todo.body = inputText.value;
         todo.completed = false;
         todo.priority = priority ? priority : todo.priority;
         todo.date = formatDate(new Date());
-        todo.id = editId;
-        todo.color = todoColor.value;
+        todo.id = idOfEditItem;
+        todo.color = inputColor.value;
       }
       return todo;
     });
-    printTasks();
-    printColor();
-    printCompletedTasks();
-    addEventsForItems();
-    edit = false;
-    localStorage.setItem("todo", JSON.stringify(todoList));
+
+    editMode = false;
   } else {
     let newTodo = {
       title: inputTitle.value,
       body: inputText.value,
-      color: todoColor.value,
+      color: inputColor.value,
       completed: false,
       priority,
       date: formatDate(new Date()),
-      id,
+      id: todoId,
     };
 
     writingTodo(newTodo);
-    printTasks();
-    printColor();
-    printCompletedTasks();
-    addEventsForItems();
-    localStorage.setItem("todo", JSON.stringify(todoList));
   }
+
+  addEventsForItems();
   getCounter();
+  localStorage.setItem("todo", JSON.stringify(todoList));
 });
 
 const formatDate = (date) => {
@@ -156,6 +136,12 @@ const formatDate = (date) => {
   return `${hours}:${minutes} ${day}.${month}.${year}`;
 };
 
+const setEventsToRadioButtons = () => {
+  setEventToRadio(lowRadioButton);
+  setEventToRadio(mediumRadioButton);
+  setEventToRadio(highRadioButton);
+};
+
 const setEventToRadio = (radio) => {
   radio.addEventListener("click", () => {
     priority = radio.value;
@@ -166,136 +152,94 @@ const writingTodo = (todo) => {
   todoList.push(todo);
 };
 
-const printTasks = () => {
-  let printTasks = "";
-
-  todoList.map((todo, index) => {
-    if (!todo.completed) {
-      printTasks += `
-      <li class="list-group-item d-flex w-100 mb-2" id=${todo.id}>
-                <div class="w-100 mr-2">
-                  <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">${todo.title}</h5>
-                    <div>
-                      <small class="mr-2">${todo.priority} priority</small>
-                      <small>${todo.date}</small>
-                    </div>
-                  </div>
-                  <p class="mb-1 w-100">
-                    ${todo.body}
-                  </p>
-                </div>
-                <div class="dropdown m-2 dropleft">
-                  <button
-                    class="btn btn-secondary h-100"
-                    type="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                  </button>
-                  <div
-                    class="dropdown-menu p-2 flex-column"
-                    aria-labelledby="dropdownMenuItem1"
-                  >
-                    <button type="button" class="btn btn-success w-100" id="completeButton${todo.id}">
-                      Complete
-                    </button>
-                    <button type="button"  class="btn btn-info w-100 my-2" id="editButton${todo.id}">
-                      Edit
-                    </button>
-                    <button type="button" class="btn btn-danger w-100" id="deleteButton${todo.id}" >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </li>`;
-    }
-    currentTasks.innerHTML = printTasks;
-
-    id = index + 1;
+const addEventsForItems = () => {
+  printTasks();
+  todoList.map((todo) => {
+    getEditEvent(todo);
+    getDeleteEvent(todo.id);
+    getCompleteEvent(todo);
+    addColoForItem(todo);
   });
-
-  deleteInputsValue();
-  closeButton.click();
 };
 
-const printCompletedTasks = () => {
+const printTasks = () => {
+  let printTasks = "";
   let printCompletedTasks = "";
+
   todoList.map((todo, index) => {
     if (todo.completed) {
-      printCompletedTasks += `
-      <li class="list-group-item d-flex w-100 mb-2 completed" id=${todo.id}>
-              <div class="w-100 mr-2">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1">${todo.title}</h5> 
-                  <div>
-                    <small class="mr-2">${todo.priority} priority</small>
-                    <small>${todo.date}</small>
-                  </div>
-                </div>
-                <p class="mb-1 w-100">
-                  ${todo.body}
-                </p>
-              </div>
-              <div class="dropdown m-2 dropleft">
-                <button
-                  class="btn btn-secondary h-100"
-                  type="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-                </button>
-                <div
-                  class="dropdown-menu p-2 flex-column"
-                  aria-labelledby="dropdownMenuItem1"
-                >
-                <button type="button" class="btn btn-success w-100 " id="completeButton${todo.id}" disabled>
-                Complete
-              </button>
-              <button type="button"  class="btn btn-info w-100 my-2" id="editButton${todo.id}" disabled>
-                Edit
-              </button>
-              <button type="button" class="btn btn-danger w-100" id="deleteButton${todo.id}" >
-                Delete
-              </button>
-                </div>
-              </div>
-            </li>`;
+      printCompletedTasks += itemTemplate(todo);
+    } else {
+      printTasks += itemTemplate(todo);
     }
     completedTasks.innerHTML = printCompletedTasks;
-
-    id = index + 1;
+    currentTasks.innerHTML = printTasks;
+    todoId = index + 1;
   });
+
   deleteInputsValue();
-  closeButton.click();
+  closeFormButton.click();
+};
+
+const itemTemplate = (todo) => {
+  let disabled = todo.completed ? "disabled" : "";
+  let completed = todo.completed ? "completed" : "";
+  return `
+  <li class="list-group-item d-flex w-100 mb-2 ${completed}" id=${todo.id}>
+          <div class="w-100 mr-2">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">${todo.title}</h5> 
+              <div>
+                <small class="mr-2">${todo.priority} priority</small>
+                <small>${todo.date}</small>
+              </div>
+            </div>
+            <p class="mb-1 w-100">
+              ${todo.body}
+            </p>
+          </div>
+          <div class="dropdown m-2 dropleft">
+            <button
+              class="btn btn-secondary h-100"
+              type="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+            <div
+              class="dropdown-menu p-2 flex-column"
+              aria-labelledby="dropdownMenuItem1"
+            >
+            <button type="button" class="btn btn-success w-100 " id="completeButton${todo.id}" ${disabled}>
+            Complete
+          </button>
+          <button type="button"  class="btn btn-info w-100 my-2" id="editButton${todo.id}" ${disabled}>
+            Edit
+          </button>
+          <button type="button" class="btn btn-danger w-100" id="deleteButton${todo.id}" >
+            Delete
+          </button>
+            </div>
+          </div>
+        </li>`;
 };
 
 const deleteInputsValue = () => {
   inputTitle.value = "";
   inputText.value = "";
-  low.checked = false;
-  medium.checked = false;
-  high.checked = false;
+  lowRadioButton.checked = false;
+  mediumRadioButton.checked = false;
+  highRadioButton.checked = false;
+
+  inputColor.value = "rgba(44,175,254,0.5)";
 };
 
-const printColor = () => {
-  todoList.map((todo) => {
-    if (!todo.completed) {
-      document.getElementById(todo.id).style.backgroundColor = todo.color;
-    }
-  });
-};
-
-const addEventsForItems = () => {
-  todoList.map((todo) => {
-    getEditEvent(todo);
-    getDeleteEvent(todo.id);
-    getCompleteEvent(todo);
-  });
+const addColoForItem = (todo) => {
+  if (!todo.completed) {
+    document.getElementById(todo.id).style.backgroundColor = todo.color;
+  }
 };
 
 const getCompleteEvent = (todos) => {
@@ -303,15 +247,15 @@ const getCompleteEvent = (todos) => {
     .getElementById(`completeButton${todos.id}`)
     .addEventListener("click", () => {
       document.getElementById(todos.id).classList.add("active");
+
       todoList.map((todo) => {
         if (todo.id === todos.id) {
           todo.completed = true;
         }
-
         return todo;
       });
-      document.getElementById(todos.id).remove();
-      printCompletedTasks();
+
+      removeTodoById(todos.id);
       addEventsForItems();
       getCounter();
       localStorage.setItem("todo", JSON.stringify(todoList));
@@ -323,8 +267,9 @@ const getDeleteEvent = (idItem) => {
     .getElementById(`deleteButton${idItem}`)
     .addEventListener("click", () => {
       if (document.getElementById(idItem)) {
-        document.getElementById(idItem).remove();
+        removeTodoById(idItem);
       }
+
       let newTodoList = todoList.filter((todo) => todo.id !== idItem);
       todoList = newTodoList;
       localStorage.setItem("todo", JSON.stringify(todoList));
@@ -339,11 +284,36 @@ const getEditEvent = (todo) => {
 
       inputTitle.value = todo.title;
       inputText.value = todo.body;
-      low.checked = todo.priority === "Low" ? true : false;
-      medium.checked = todo.priority === "Medium" ? true : false;
-      high.checked = todo.priority === "High" ? true : false;
-      todoColor.value = todo.color;
-      editId = todo.id;
-      edit = true;
+      lowRadioButton.checked = todo.priority === "Low" ? true : false;
+      mediumRadioButton.checked = todo.priority === "Medium" ? true : false;
+      highRadioButton.checked = todo.priority === "High" ? true : false;
+      inputColor.value = todo.color;
+      idOfEditItem = todo.id;
+      editMode = true;
     });
+};
+
+const getCounter = () => {
+  let counterNotCompleted = 0;
+  let counterCompleted = 0;
+
+  todoList.map((todo) => {
+    if (todo.completed) {
+      counterCompleted++;
+    } else {
+      counterNotCompleted++;
+    }
+  });
+
+  numberOfNotCompletedTusks.innerHTML = `ToDo(${counterNotCompleted})`;
+  numberOfCompletedTusks.innerHTML = `Completed(${counterCompleted})`;
+};
+
+const removeTodoById = (id) => {
+  document.getElementById(id).remove();
+};
+
+const setLocalStorageTheme = (href) => {
+  documentStylesLink.href = href;
+  localStorage.setItem("style", JSON.stringify(href));
 };
