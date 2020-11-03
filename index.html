@@ -15,11 +15,6 @@
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
       crossorigin="anonymous"
     />
-    <script
-      src="./LogicPart_files/aa7a31f950.js.Без названия"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="./LogicPart_files/free.min.css" media="all" />
     <link
       rel="stylesheet"
       href="./LogicPart_files/free-v4-font-face.min.css"
@@ -81,7 +76,6 @@
                     type="radio"
                     name="options"
                     id="optionLight"
-                    autocomplete="off"
                   />
                   Light
                 </label>
@@ -90,7 +84,6 @@
                     type="radio"
                     name="options"
                     id="optionDark"
-                    autocomplete="off"
                   />
                   Dark
                 </label>
@@ -101,13 +94,13 @@
       </nav>
       <div class="row justify-content-center">
         <div class="col-10">
-          <h3 class="my-2" id="numberOfNotCompletedTusks"></h3>
+          <h3 class="my-2" id="numberOfNotCompletedTusks">(0)</h3>
           <ul
             class="list-group flex-wrap justify-content-between"
             id="currentTasks"
           ></ul>
           <hr />
-          <h3 class="my-2" id="numberOfCompletedTusks"></h3>
+          <h3 class="my-2" id="numberOfCompletedTusks">(0)</h3>
           <ul
             class="list-group flex-wrap justify-content-between"
             id="completedTasks"
@@ -170,7 +163,7 @@
               </div>
               <fieldset class="form-group">
                 <div class="row">
-                  <legend class="col-form-label col-sm-2 pt-0">Priority</legend>
+                  <label class="col-form-label col-sm-2 pt-0">Priority</label>
                   <div class="col-sm-10">
                     <div class="form-check">
                       <input

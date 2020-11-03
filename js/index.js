@@ -1,190 +1,187 @@
-let addNewTaskButton = document.getElementById("createNewTask");
+const addNewTaskButton = document.getElementById('createNewTask');
 
-let inputTitle = document.getElementById("inputTitle");
-let inputText = document.getElementById("inputText");
-let lowRadioButton = document.getElementById("Low");
-let mediumRadioButton = document.getElementById("Medium");
-let highRadioButton = document.getElementById("High");
-let inputColor = document.getElementById("todoColor");
+const inputTitle = document.getElementById('inputTitle');
+const inputText = document.getElementById('inputText');
+const lowRadioButton = document.getElementById('Low');
+const mediumRadioButton = document.getElementById('Medium');
+const highRadioButton = document.getElementById('High');
+const inputColor = document.getElementById('todoColor');
 
-let addTaskForm = document.getElementById("addTaskForm");
-let closeFormButton = document.querySelector(".close");
+const addTaskForm = document.getElementById('addTaskForm');
+const closeFormButton = document.querySelector('.close');
 
-let currentTasks = document.getElementById("currentTasks");
-let completedTasks = document.getElementById("completedTasks");
+const currentTasks = document.getElementById('currentTasks');
+const completedTasks = document.getElementById('completedTasks');
 
-let sortFromBiggestButon = document.getElementById("fromGreat");
-let sortFromSmallestButton = document.getElementById("fromSmall");
-let numberOfNotCompletedTusks = document.getElementById(
-  "numberOfNotCompletedTusks"
-);
-let numberOfCompletedTusks = document.getElementById("numberOfCompletedTusks");
+const sortFromBiggestButon = document.getElementById('fromGreat');
+const sortFromSmallestButton = document.getElementById('fromSmall');
+const numberOfNotCompletedTusks = document.getElementById('numberOfNotCompletedTusks');
+const numberOfCompletedTusks = document.getElementById('numberOfCompletedTusks');
 
-let documentStylesLink = document.getElementById("styles");
+const documentStylesLink = document.getElementById('styles');
 
-let lightThemeButton = document.getElementById("optionLight");
-let darkThemeButton = document.getElementById("optionDark");
+const lightThemeButton = document.getElementById('optionLight');
+const darkThemeButton = document.getElementById('optionDark');
 
 let todoId = 0;
 let editMode = false;
 let idOfEditItem;
 let todoList = [];
-let priority = "";
+let priority = '';
 
-addNewTaskButton.addEventListener("click", () => {
-  if (editMode) {
-    editMode = false;
-  }
-  deleteInputsValue();
+addNewTaskButton.addEventListener('click', () => {
+	if (editMode) {
+		editMode = false;
+	}
+	deleteInputsValue();
 });
 
-lightThemeButton.addEventListener("click", () => {
-  let href = "./css/light.css";
-  setLocalStorageTheme(href);
+lightThemeButton.addEventListener('click', () => {
+	let href = './css/light.css';
+	setLocalStorageTheme(href);
 });
 
-darkThemeButton.addEventListener("click", () => {
-  let href = "./css/black.css";
-  setLocalStorageTheme(href);
+darkThemeButton.addEventListener('click', () => {
+	let href = './css/black.css';
+	setLocalStorageTheme(href);
 });
 
-sortFromBiggestButon.addEventListener("click", () => {
-  todoList.sort(function (a, b) {
-    return new Date(b.date) - new Date(a.date);
-  });
+sortFromBiggestButon.addEventListener('click', () => {
+	todoList.sort(function(a, b) {
+		return new Date(b.date) - new Date(a.date);
+	});
 
-  addEventsForItems();
-  sortFromBiggestButon.setAttribute("disabled", true);
-  sortFromSmallestButton.removeAttribute("disabled");
+	addEventsForItems();
+	sortFromBiggestButon.setAttribute('disabled', true);
+	sortFromSmallestButton.removeAttribute('disabled');
 });
 
-sortFromSmallestButton.addEventListener("click", () => {
-  todoList.sort(function (a, b) {
-    return new Date(a.date) - new Date(b.date);
-  });
+sortFromSmallestButton.addEventListener('click', () => {
+	todoList.sort(function(a, b) {
+		return new Date(a.date) - new Date(b.date);
+	});
 
-  addEventsForItems();
-  sortFromSmallestButton.setAttribute("disabled", true);
-  sortFromBiggestButon.removeAttribute("disabled");
+	addEventsForItems();
+	sortFromSmallestButton.setAttribute('disabled', true);
+	sortFromBiggestButon.removeAttribute('disabled');
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  if (localStorage.getItem("style")) {
-    let href = JSON.parse(localStorage.getItem("style"));
-    documentStylesLink.href = href;
-    if (href.includes("black")) {
-      darkThemeButton.setAttribute("checked", "true");
-    } else {
-      lightThemeButton.setAttribute("checked", "true");
-    }
-  }
+document.addEventListener('DOMContentLoaded', () => {
+	if (localStorage.getItem('style')) {
+		let href = JSON.parse(localStorage.getItem('style'));
+		documentStylesLink.href = href;
 
-  if (localStorage.getItem("todo")) {
-    todoList = JSON.parse(localStorage.getItem("todo"));
-  }
+		if (href.includes('black')) {
+			darkThemeButton.setAttribute('checked', 'true');
+		} else {
+			lightThemeButton.setAttribute('checked', 'true');
+		}
+	}
 
-  setEventsToRadioButtons();
-  addEventsForItems();
-  getCounter();
+	if (localStorage.getItem('todo')) {
+		todoList = JSON.parse(localStorage.getItem('todo'));
+	}
+
+	setEventsToRadioButtons();
+	addEventsForItems();
+	getCounter();
 });
 
-addTaskForm.addEventListener("submit", (ev) => {
-  ev.preventDefault();
+addTaskForm.addEventListener('submit', (ev) => {
+	ev.preventDefault();
 
-  if (editMode) {
-    todoList.map((todo) => {
-      if (todo.id === idOfEditItem) {
-        todo.title = inputTitle.value;
-        todo.body = inputText.value;
-        todo.completed = false;
-        todo.priority = priority ? priority : todo.priority;
-        todo.date = formatDate(new Date());
-        todo.id = idOfEditItem;
-        todo.color = inputColor.value;
-      }
-      return todo;
-    });
+	if (editMode) {
+		todoList.map((todo) => {
+			if (todo.id === idOfEditItem) {
+				todo.title = inputTitle.value;
+				todo.body = inputText.value;
+				todo.completed = false;
+				todo.priority = priority ? priority : todo.priority;
+				todo.date = formatDate(new Date());
+				todo.id = idOfEditItem;
+				todo.color = inputColor.value;
+			}
+			return todo;
+		});
 
-    editMode = false;
-  } else {
-    let newTodo = {
-      title: inputTitle.value,
-      body: inputText.value,
-      color: inputColor.value,
-      completed: false,
-      priority,
-      date: formatDate(new Date()),
-      id: todoId,
-    };
+		editMode = false;
+	} else {
+		let newTodo = {
+			title: inputTitle.value,
+			body: inputText.value,
+			color: inputColor.value,
+			completed: false,
+			priority,
+			date: formatDate(new Date()),
+			id: todoId
+		};
 
-    writingTodo(newTodo);
-  }
+		writingTodo(newTodo);
+	}
 
-  addEventsForItems();
-  getCounter();
-  localStorage.setItem("todo", JSON.stringify(todoList));
+	addEventsForItems();
+	getCounter();
+	localStorage.setItem('todo', JSON.stringify(todoList));
 });
 
 const formatDate = (date) => {
-  let hours = date.getHours();
-  let minutes =
-    date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`;
-  let day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
-  let month =
-    date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
-  let year = date.getFullYear();
-  return `${hours}:${minutes} ${day}.${month}.${year}`;
+	let hours = date.getHours();
+	let minutes = date.getMinutes() >= 10 ? date.getMinutes() : `0${date.getMinutes()}`;
+	let day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
+	let month = date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+	let year = date.getFullYear();
+	return `${hours}:${minutes} ${day}.${month}.${year}`;
 };
 
 const setEventsToRadioButtons = () => {
-  setEventToRadio(lowRadioButton);
-  setEventToRadio(mediumRadioButton);
-  setEventToRadio(highRadioButton);
+	setEventToRadio(lowRadioButton);
+	setEventToRadio(mediumRadioButton);
+	setEventToRadio(highRadioButton);
 };
 
 const setEventToRadio = (radio) => {
-  radio.addEventListener("click", () => {
-    priority = radio.value;
-  });
+	radio.addEventListener('click', () => {
+		priority = radio.value;
+	});
 };
 
 const writingTodo = (todo) => {
-  todoList.push(todo);
+	todoList.push(todo);
 };
 
 const addEventsForItems = () => {
-  printTasks();
-  todoList.map((todo) => {
-    getEditEvent(todo);
-    getDeleteEvent(todo.id);
-    getCompleteEvent(todo);
-    addColoForItem(todo);
-  });
+	printTasks();
+	todoList.map((todo) => {
+		getEditEvent(todo);
+		getDeleteEvent(todo.id);
+		getCompleteEvent(todo);
+		addColoForItem(todo);
+	});
 };
 
 const printTasks = () => {
-  let printTasks = "";
-  let printCompletedTasks = "";
+	let printTasks = '';
+	let printCompletedTasks = '';
 
-  todoList.map((todo, index) => {
-    if (todo.completed) {
-      printCompletedTasks += itemTemplate(todo);
-    } else {
-      printTasks += itemTemplate(todo);
-    }
-    completedTasks.innerHTML = printCompletedTasks;
-    currentTasks.innerHTML = printTasks;
-    todoId = index + 1;
-  });
+	todoList.map((todo, index) => {
+		if (todo.completed) {
+			printCompletedTasks += itemTemplate(todo);
+		} else {
+			printTasks += itemTemplate(todo);
+		}
+		completedTasks.innerHTML = printCompletedTasks;
+		currentTasks.innerHTML = printTasks;
+		todoId = index + 1;
+	});
 
-  deleteInputsValue();
-  closeFormButton.click();
+	deleteInputsValue();
+	closeFormButton.click();
 };
 
 const itemTemplate = (todo) => {
-  let disabled = todo.completed ? "disabled" : "";
-  let completed = todo.completed ? "completed" : "";
-  return `
+	let disabled = todo.completed ? 'disabled' : '';
+	let completed = todo.completed ? 'completed' : '';
+	return `
   <li class="list-group-item d-flex w-100 mb-2 ${completed}" id=${todo.id}>
           <div class="w-100 mr-2">
             <div class="d-flex w-100 justify-content-between">
@@ -227,93 +224,87 @@ const itemTemplate = (todo) => {
 };
 
 const deleteInputsValue = () => {
-  inputTitle.value = "";
-  inputText.value = "";
-  lowRadioButton.checked = false;
-  mediumRadioButton.checked = false;
-  highRadioButton.checked = false;
+	inputTitle.value = '';
+	inputText.value = '';
+	lowRadioButton.checked = false;
+	mediumRadioButton.checked = false;
+	highRadioButton.checked = false;
 
-  inputColor.value = "rgba(44,175,254,0.5)";
+	inputColor.value = 'rgba(44,175,254,0.5)';
 };
 
 const addColoForItem = (todo) => {
-  if (!todo.completed) {
-    document.getElementById(todo.id).style.backgroundColor = todo.color;
-  }
+	if (!todo.completed) {
+		document.getElementById(todo.id).style.backgroundColor = todo.color;
+	}
 };
 
 const getCompleteEvent = (todos) => {
-  document
-    .getElementById(`completeButton${todos.id}`)
-    .addEventListener("click", () => {
-      document.getElementById(todos.id).classList.add("active");
+	document.getElementById(`completeButton${todos.id}`).addEventListener('click', () => {
+		document.getElementById(todos.id).classList.add('active');
 
-      todoList.map((todo) => {
-        if (todo.id === todos.id) {
-          todo.completed = true;
-        }
-        return todo;
-      });
+		todoList.map((todo) => {
+			if (todo.id === todos.id) {
+				todo.completed = true;
+			}
+			return todo;
+		});
 
-      removeTodoById(todos.id);
-      addEventsForItems();
-      getCounter();
-      localStorage.setItem("todo", JSON.stringify(todoList));
-    });
+		removeTodoById(todos.id);
+		addEventsForItems();
+		getCounter();
+		localStorage.setItem('todo', JSON.stringify(todoList));
+	});
 };
 
 const getDeleteEvent = (idItem) => {
-  document
-    .getElementById(`deleteButton${idItem}`)
-    .addEventListener("click", () => {
-      if (document.getElementById(idItem)) {
-        removeTodoById(idItem);
-      }
+	document.getElementById(`deleteButton${idItem}`).addEventListener('click', () => {
+		if (document.getElementById(idItem)) {
+			removeTodoById(idItem);
+		}
 
-      let newTodoList = todoList.filter((todo) => todo.id !== idItem);
-      todoList = newTodoList;
-      localStorage.setItem("todo", JSON.stringify(todoList));
-      getCounter();
-    });
+		let newTodoList = todoList.filter((todo) => todo.id !== idItem);
+		todoList = newTodoList;
+		localStorage.setItem('todo', JSON.stringify(todoList));
+		getCounter();
+	});
 };
 const getEditEvent = (todo) => {
-  document
-    .getElementById(`editButton${todo.id}`)
-    .addEventListener("click", () => {
-      createNewTask.click();
+	document.getElementById(`editButton${todo.id}`).addEventListener('click', () => {
+		createNewTask.click();
 
-      inputTitle.value = todo.title;
-      inputText.value = todo.body;
-      lowRadioButton.checked = todo.priority === "Low" ? true : false;
-      mediumRadioButton.checked = todo.priority === "Medium" ? true : false;
-      highRadioButton.checked = todo.priority === "High" ? true : false;
-      inputColor.value = todo.color;
-      idOfEditItem = todo.id;
-      editMode = true;
-    });
+		inputTitle.value = todo.title;
+		inputText.value = todo.body;
+		lowRadioButton.checked = todo.priority === 'Low' ? true : false;
+		mediumRadioButton.checked = todo.priority === 'Medium' ? true : false;
+		highRadioButton.checked = todo.priority === 'High' ? true : false;
+		inputColor.value = todo.color;
+		idOfEditItem = todo.id;
+		editMode = true;
+	});
 };
 
 const getCounter = () => {
-  let counterNotCompleted = 0;
-  let counterCompleted = 0;
+	let counterNotCompleted = 0;
+	let counterCompleted = 0;
 
-  todoList.map((todo) => {
-    if (todo.completed) {
-      counterCompleted++;
-    } else {
-      counterNotCompleted++;
-    }
-  });
+	todoList.map((todo) => {
+		if (todo.completed) {
+			counterCompleted++;
+		} else {
+			counterNotCompleted++;
+		}
+	});
 
-  numberOfNotCompletedTusks.innerHTML = `ToDo(${counterNotCompleted})`;
-  numberOfCompletedTusks.innerHTML = `Completed(${counterCompleted})`;
+	numberOfNotCompletedTusks.innerHTML = `ToDo(${counterNotCompleted})`;
+	numberOfCompletedTusks.innerHTML = `Completed(${counterCompleted})`;
 };
 
 const removeTodoById = (id) => {
-  document.getElementById(id).remove();
+	document.getElementById(id).remove();
 };
 
 const setLocalStorageTheme = (href) => {
-  documentStylesLink.href = href;
-  localStorage.setItem("style", JSON.stringify(href));
+	documentStylesLink.href = href;
+	localStorage.setItem('style', JSON.stringify(href));
 };
