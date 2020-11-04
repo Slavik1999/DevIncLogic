@@ -1,7 +1,11 @@
 .wrapper {
-  min-height: calc(100vh - 15px);
-  margin: 0 auto 0;
+	min-height: calc(100vh - 15px);
+	margin: 0 auto 0;
 }
 .list-group-item.completed {
-  background-color: rgb(8, 199, 8);
+	background-color: rgb(8, 199, 8);
+}
+.numberOfNotCompletedTusks,
+h3 {
+	display: inline-block;
 }

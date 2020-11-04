@@ -1,42 +1,46 @@
 .wrapper {
-  min-height: calc(100vh - 15px);
-  margin: 0 auto 0;
-  background-color: rgb(26, 25, 25);
-  color: rgb(218, 213, 213);
+	min-height: calc(100vh - 15px);
+	margin: 0 auto 0;
+	background-color: rgb(26, 25, 25);
+	color: rgb(218, 213, 213);
 }
 nav.navbar {
-  background-color: #343a40;
+	background-color: #343a40;
 }
 button.btn-primary {
-  background-color: rgb(26, 25, 25);
-  border-color: black;
+	background-color: rgb(26, 25, 25);
+	border-color: black;
 }
 
 button.btn-primary:hover {
-  color: black;
-  background-color: rgb(214, 212, 212);
+	color: black;
+	background-color: rgb(214, 212, 212);
 }
 li.list-group-item {
-  background-color: #343a40;
+	background-color: #343a40;
 }
 .list-group-item.completed {
-  background-color: rgb(12, 112, 12);
+	background-color: rgb(12, 112, 12);
 }
 div.dropdown.show {
-  background-color: rgb(214, 212, 212);
+	background-color: rgb(214, 212, 212);
 }
 div.modal-content {
-  background-color: rgb(26, 25, 25);
-  color: rgb(240, 236, 236);
+	background-color: rgb(26, 25, 25);
+	color: rgb(240, 236, 236);
 }
 input.form-control {
-  background-color: #343a40;
-  color: rgb(240, 236, 236);
+	background-color: #343a40;
+	color: rgb(240, 236, 236);
 }
 input.form-control:focus {
-  background-color: #343a40;
-  color: rgb(240, 236, 236);
+	background-color: #343a40;
+	color: rgb(240, 236, 236);
 }
 div.dropdown-menu.show {
-  background-color: #343a40;
+	background-color: #343a40;
+}
+.numberOfNotCompletedTusks,
+h3 {
+	display: inline-block;
 }

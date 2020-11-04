@@ -53,7 +53,7 @@
             id="createNewTask"
           >
             <i class="fa fa-plus" aria-hidden="true"></i>
-            Add task
+            <span id="AddTask">Add task</span>
           </button>
           <div class="dropdown ml-2">
             <button
@@ -88,19 +88,37 @@
                   Dark
                 </label>
               </div>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary">
+                  <input
+                    type="radio"
+                    name="options"
+                    id="EN"
+                  />
+                  EN
+                </label>
+                <label class="btn btn-secondary">
+                  <input
+                    type="radio"
+                    name="options"
+                    id="RUS"
+                  />
+                  RUS
+                </label>
+              </div>
             </div>
           </div>
         </div>
       </nav>
       <div class="row justify-content-center">
         <div class="col-10">
-          <h3 class="my-2" id="numberOfNotCompletedTusks">(0)</h3>
+          <h3 id="ToDo">ToDo</h3><h3 class="my-2" id="numberOfNotCompletedTusks">(0)</h3>
           <ul
             class="list-group flex-wrap justify-content-between"
             id="currentTasks"
           ></ul>
           <hr />
-          <h3 class="my-2" id="numberOfCompletedTusks">(0)</h3>
+          <h3 id="Completed">Completed</h3><h3 class="my-2" id="numberOfCompletedTusks">(0)</h3>
           <ul
             class="list-group flex-wrap justify-content-between"
             id="completedTasks"
@@ -134,7 +152,7 @@
           <div class="modal-body">
             <form id="addTaskForm">
               <div class="form-group row">
-                <label for="inputTitle" class="col-sm-2 col-form-label"
+                <label for="inputTitle" class="col-sm-2 col-form-label" id="Title"
                   >Title</label
                 >
                 <div class="col-sm-10">
@@ -148,7 +166,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label for="inputText" class="col-sm-2 col-form-label"
+                <label for="inputText" class="col-sm-2 col-form-label" id="Text"
                   >Text</label
                 >
                 <div class="col-sm-10">
@@ -163,7 +181,7 @@
               </div>
               <fieldset class="form-group">
                 <div class="row">
-                  <label class="col-form-label col-sm-2 pt-0">Priority</label>
+                  <label class="col-form-label col-sm-2 pt-0" id="Priority">Priority</label>
                   <div class="col-sm-10">
                     <div class="form-check">
                       <input
@@ -172,9 +190,9 @@
                         name="gridRadios"
                         id="Low"
                         value="Low"
-                        required=""
+                        required
                       />
-                      <label class="form-check-label" for="Low"> Low </label>
+                      <label class="form-check-label" for="Low" id="LowLabel"> Low </label>
                     </div>
                     <div class="form-check">
                       <input
@@ -183,8 +201,9 @@
                         name="gridRadios"
                         id="Medium"
                         value="Medium"
+                        required
                       />
-                      <label class="form-check-label" for="Medium">
+                      <label class="form-check-label" for="Medium" id="MediumLabel">
                         Medium
                       </label>
                     </div>
@@ -195,11 +214,12 @@
                         name="gridRadios"
                         id="High"
                         value="High"
+                        required
                       />
-                      <label class="form-check-label" for="High"> High </label>
+                      <label class="form-check-label" for="High" id="HighLabel"> High </label>
                     </div>
                     <p>
-                      Todo Color:
+                      <span id="TodoColor">Todo Color:</span>
                       <input
                         data-jscolor="{width:120}"
                         id="todoColor"
@@ -215,6 +235,7 @@
                     type="button"
                     class="btn btn-secondary"
                     data-dismiss="modal"
+                    id="closeBtn"
                   >
                     Close
                   </button>
@@ -244,7 +265,17 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="./js/colorPicker.js"></script>
-    <script src="./js/index.js"></script>
+    <script src='./js/getELements.js'></script>
+
+    <script src='./js/themeSwitch.js'></script>
+    <script src="./js/colorPicker.js" ></script>
+    <script src="./js/getCounter.js" ></script>
+    <script src="./js/deleteInputsValue.js" ></script>
+    <script src="./js/printTasks.js" ></script>
+    <script src="./js/addEventsForItems.js" ></script>
+    <script src="./js/sortButtons.js" ></script>
+    <script src="./js/addTask.js" ></script>
+    <script src="./js/onLoad.js" ></script>
+    <script src='./js/languageSwitch.js'></script>
   </body>
 </html>
