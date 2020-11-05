@@ -8,7 +8,7 @@ const highRadioButton = document.getElementById('High');
 const inputColor = document.getElementById('todoColor');
 
 const addTaskForm = document.getElementById('addTaskForm');
-const closeFormButton = document.querySelector('.close');
+const closeFormButton = document.querySelector('#closeModal');
 
 const currentTasks = document.getElementById('currentTasks');
 const completedTasks = document.getElementById('completedTasks');

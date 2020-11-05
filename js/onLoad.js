@@ -10,8 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	if (localStorage.getItem('todo')) {
-		todoList = JSON.parse(localStorage.getItem('todo'));
+	if (JSON.parse(localStorage.getItem('user'))) {
+		leaveBtn.classList.remove('d-none');
+		authBtn.classList.add('d-none');
+
+		allUsers = localStorage.getItem('allUsers') ? JSON.parse(localStorage.getItem('allUsers')) : [];
+		user = JSON.parse(localStorage.getItem('user'));
+		todoList = user.todos;
 	}
 
 	setEventsToRadioButtons();

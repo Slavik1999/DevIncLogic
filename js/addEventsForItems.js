@@ -22,7 +22,17 @@ const getCompleteEvent = (todos) => {
 		removeTodoById(todos.id);
 		addEventsForItems();
 		getCounter();
-		localStorage.setItem('todo', JSON.stringify(todoList));
+
+		user.todos = todoList;
+
+		allUsers.map((item) => {
+			if (item.email === user.email) {
+				item.todos = user.todos;
+			}
+		});
+
+		localStorage.setItem('allUsers', JSON.stringify(allUsers));
+		localStorage.setItem('user', JSON.stringify(user));
 	});
 };
 
@@ -33,8 +43,20 @@ const getDeleteEvent = (idItem) => {
 		}
 
 		let newTodoList = todoList.filter((todo) => todo.id !== idItem);
+
 		todoList = newTodoList;
-		localStorage.setItem('todo', JSON.stringify(todoList));
+
+		user.todos = todoList;
+
+		allUsers.map((item) => {
+			if (item.email === user.email) {
+				item.todos = user.todos;
+			}
+		});
+
+		localStorage.setItem('allUsers', JSON.stringify(allUsers));
+		localStorage.setItem('user', JSON.stringify(user));
+
 		getCounter();
 	});
 };

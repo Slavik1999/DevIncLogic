@@ -49,13 +49,13 @@ const itemTemplate = (todo) => {
               aria-labelledby="dropdownMenuItem1"
             >
             <button type="button" class="btn btn-success w-100 " id="completeButton${todo.id}" ${disabled}>
-            Complete
+            <span id="btnCompleteTxt">Complete</span>
           </button>
           <button type="button"  class="btn btn-info w-100 my-2" id="editButton${todo.id}" ${disabled}>
-            Edit
+            <span id="btnEditTxt">Edit</span>
           </button>
           <button type="button" class="btn btn-danger w-100" id="deleteButton${todo.id}" >
-            Delete
+            <span id="btnDeleteTxt">Delete</span>
           </button>
             </div>
           </div>

@@ -1,7 +1,9 @@
 let todoId = 0;
 let editMode = false;
 let idOfEditItem;
+let allUsers = [];
 let todoList = [];
+let user = {};
 let priority = '';
 
 addNewTaskButton.addEventListener('click', () => {
@@ -45,7 +47,19 @@ addTaskForm.addEventListener('submit', (ev) => {
 
 	addEventsForItems();
 	getCounter();
-	localStorage.setItem('todo', JSON.stringify(todoList));
+
+	if (JSON.parse(localStorage.getItem('user'))) {
+		user.todos = todoList;
+
+		allUsers.map((item) => {
+			if (item.email === user.email) {
+				item.todos = user.todos;
+			}
+		});
+
+		localStorage.setItem('allUsers', JSON.stringify(allUsers));
+		localStorage.setItem('user', JSON.stringify(user));
+	}
 });
 
 const formatDate = (date) => {
