@@ -1,32 +1,32 @@
-const addNewTaskButton = document.getElementById('createNewTask');
+const addNewTaskButton = document.querySelector('#createNewTask');
 
 //Add task form fields
-const inputTitle = document.getElementById('inputTitle');
-const inputText = document.getElementById('inputText');
-const lowRadioButton = document.getElementById('Low');
-const mediumRadioButton = document.getElementById('Medium');
-const highRadioButton = document.getElementById('High');
-const inputColor = document.getElementById('todoColor');
-const addTaskForm = document.getElementById('addTaskForm');
+const inputTitle = document.querySelector('#inputTitle');
+const inputText = document.querySelector('#inputText');
+const lowRadioButton = document.querySelector('#Low');
+const mediumRadioButton = document.querySelector('#Medium');
+const highRadioButton = document.querySelector('#High');
+const inputColor = document.querySelector('#todoColor');
+const addTaskForm = document.querySelector('#addTaskForm');
 const closeFormButton = document.querySelector('#closeModal');
 
 //Lists of todos
-const currentTasks = document.getElementById('currentTasks');
-const completedTasks = document.getElementById('completedTasks');
+const currentTasks = document.querySelector('#currentTasks');
+const completedTasks = document.querySelector('#completedTasks');
 
 //Todos counter
-const numberOfNotCompletedTusks = document.getElementById('numberOfNotCompletedTusks');
-const numberOfCompletedTusks = document.getElementById('numberOfCompletedTusks');
+const numberOfNotCompletedTusks = document.querySelector('#numberOfNotCompletedTusks');
+const numberOfCompletedTusks = document.querySelector('#numberOfCompletedTusks');
 
 //Sort by date
-const sortFromBiggestButon = document.getElementById('fromGreat');
-const sortFromSmallestButton = document.getElementById('fromSmall');
+const sortFromBiggestButon = document.querySelector('#fromGreat');
+const sortFromSmallestButton = document.querySelector('#fromSmall');
 
 //Theme switch
-const documentStylesLink = document.getElementById('styles');
+const documentStylesLink = document.querySelector('#styles');
 
-const lightThemeButton = document.getElementById('optionLight');
-const darkThemeButton = document.getElementById('optionDark');
+const lightThemeButton = document.querySelector('#optionLight');
+const darkThemeButton = document.querySelector('#optionDark');
 
 //Language switch
 const MyTodoList = document.querySelector('#mainTitle');
