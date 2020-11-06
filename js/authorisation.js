@@ -1,19 +1,3 @@
-const inputEmail = document.querySelector('#inputEmail');
-const inputPassword = document.querySelector('#inputPassword');
-const closeAuth = document.querySelector('#closeAuth');
-
-const leaveBtn = document.querySelector('#leaveBtn');
-const authBtn = document.querySelector('#authorisationBtn');
-
-const modalError = document.querySelector('#modalError');
-
-const LogInBtn = document.querySelector('#LogIn');
-const SignUpBtn = document.querySelector('#SignUp');
-
-const authForm = document.querySelector('#authForm');
-
-const usersArr = localStorage.getItem('allUsers') ? JSON.parse(localStorage.getItem('allUsers')) : [];
-
 authForm.addEventListener('submit', (ev) => {
 	ev.preventDefault();
 });
@@ -32,30 +16,31 @@ SignUpBtn.addEventListener('click', () => {
 	}
 
 	if (!errArr.length) {
-		usersArr.push({ email: inputEmail.value, password: inputPassword.value, todos: [] });
+		const newUser = { email: inputEmail.value, password: inputPassword.value, todos: [] };
 
-		localStorage.setItem('allUsers', JSON.stringify(usersArr));
-		localStorage.setItem(
-			'user',
-			JSON.stringify({ email: inputEmail.value, password: inputPassword.value, todos: [] })
-		);
+		usersArr.push(newUser);
 
 		allUsers = usersArr;
-		user = JSON.parse(localStorage.getItem('user'));
+		user = newUser;
 		todoList = user.todos;
+
+		updateLocalStorage(todoList);
 
 		addEventsForItems();
 		getCounter();
 
-		leaveBtn.classList.remove('d-none');
-		authBtn.classList.add('d-none');
+		showBtn(leaveBtn, authBtn);
 
-		closeAuth.click();
-		clearInputs();
+		closeForm();
 	} else {
 		printErrors(errArr);
 	}
 });
+
+function showBtn(showedBtn, hidedBtn) {
+	showedBtn.classList.remove('d-none');
+	hidedBtn.classList.add('d-none');
+}
 
 LogInBtn.addEventListener('click', () => {
 	let errArr = [];
@@ -70,15 +55,11 @@ LogInBtn.addEventListener('click', () => {
 			user = loggedUser;
 			todoList = user.todos;
 
-			addEventsForItems();
-			getCounter();
-			dragAndDrop();
+			updateDraggedDisplay();
 
-			leaveBtn.classList.remove('d-none');
-			authBtn.classList.add('d-none');
+			showBtn(leaveBtn, authBtn);
 
-			closeAuth.click();
-			clearInputs();
+			closeForm();
 		} else {
 			errArr.push('Не верный пароль');
 		}
@@ -99,16 +80,17 @@ leaveBtn.addEventListener('click', () => {
 
 	completedTasks.innerHTML = '';
 	currentTasks.innerHTML = '';
+
 	addEventsForItems();
 	getCounter();
 
-	leaveBtn.classList.add('d-none');
-	authBtn.classList.remove('d-none');
+	showBtn(authBtn, leaveBtn);
 });
 
-function clearInputs() {
+function closeForm() {
 	inputEmail.value = '';
 	inputPassword.value = '';
+	closeAuth.click();
 }
 
 function printErrors(arr) {

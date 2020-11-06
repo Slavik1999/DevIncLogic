@@ -8,7 +8,6 @@ const printTasks = () => {
 		} else {
 			printTasks += itemTemplate(todo);
 		}
-		todoId = index + 1;
 	});
 	completedTasks.innerHTML = printCompletedTasks;
 	currentTasks.innerHTML = printTasks;

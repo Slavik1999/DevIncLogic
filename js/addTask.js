@@ -1,4 +1,3 @@
-let todoId = 0;
 let editMode = false;
 let idOfEditItem;
 let allUsers = [];
@@ -12,14 +11,6 @@ addNewTaskButton.addEventListener('click', () => {
 	}
 	deleteInputsValue();
 });
-
-const getHighestId = (arr) => {
-	let id = 0;
-
-	arr.forEach((item) => (item.id > id ? (id = item.id) : ''));
-
-	return id + 1;
-};
 
 addTaskForm.addEventListener('submit', (ev) => {
 	ev.preventDefault();
@@ -47,29 +38,26 @@ addTaskForm.addEventListener('submit', (ev) => {
 			completed: false,
 			priority,
 			date: formatDate(new Date()),
-			id: getHighestId(todoList)
+			id: getHighestId(todoList) + 1
 		};
 
 		writingTodo(newTodo);
 	}
 
-	addEventsForItems();
-	getCounter();
-	dragAndDrop();
+	updateDraggedDisplay();
 
 	if (JSON.parse(localStorage.getItem('user'))) {
-		user.todos = todoList;
-
-		allUsers.map((item) => {
-			if (item.email === user.email) {
-				item.todos = user.todos;
-			}
-		});
-
-		localStorage.setItem('allUsers', JSON.stringify(allUsers));
-		localStorage.setItem('user', JSON.stringify(user));
+		updateLocalStorage(todoList);
 	}
 });
+
+const getHighestId = (arr) => {
+	let id = 0;
+
+	arr.forEach((item) => (item.id > id ? (id = item.id) : ''));
+
+	return id;
+};
 
 const formatDate = (date) => {
 	let hours = date.getHours();
