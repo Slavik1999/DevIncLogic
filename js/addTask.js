@@ -13,6 +13,14 @@ addNewTaskButton.addEventListener('click', () => {
 	deleteInputsValue();
 });
 
+const getHighestId = (arr) => {
+	let id = 0;
+
+	arr.forEach((item) => (item.id > id ? (id = item.id) : ''));
+
+	return id + 1;
+};
+
 addTaskForm.addEventListener('submit', (ev) => {
 	ev.preventDefault();
 
@@ -39,7 +47,7 @@ addTaskForm.addEventListener('submit', (ev) => {
 			completed: false,
 			priority,
 			date: formatDate(new Date()),
-			id: todoId
+			id: getHighestId(todoList)
 		};
 
 		writingTodo(newTodo);
@@ -47,6 +55,7 @@ addTaskForm.addEventListener('submit', (ev) => {
 
 	addEventsForItems();
 	getCounter();
+	dragAndDrop();
 
 	if (JSON.parse(localStorage.getItem('user'))) {
 		user.todos = todoList;

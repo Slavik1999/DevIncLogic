@@ -72,6 +72,7 @@ LogInBtn.addEventListener('click', () => {
 
 			addEventsForItems();
 			getCounter();
+			dragAndDrop();
 
 			leaveBtn.classList.remove('d-none');
 			authBtn.classList.add('d-none');

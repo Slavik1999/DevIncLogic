@@ -8,11 +8,10 @@ const printTasks = () => {
 		} else {
 			printTasks += itemTemplate(todo);
 		}
-		completedTasks.innerHTML = printCompletedTasks;
-		currentTasks.innerHTML = printTasks;
 		todoId = index + 1;
 	});
-
+	completedTasks.innerHTML = printCompletedTasks;
+	currentTasks.innerHTML = printTasks;
 	deleteInputsValue();
 	closeFormButton.click();
 };
@@ -21,7 +20,7 @@ const itemTemplate = (todo) => {
 	let disabled = todo.completed ? 'disabled' : '';
 	let completed = todo.completed ? 'completed' : '';
 	return `
-  <li class="list-group-item d-flex w-100 mb-2 ${completed}" id=${todo.id}>
+  <li class="list-group-item d-flex w-100 mb-2 ${completed}" id=${todo.id} draggable="true">
           <div class="w-100 mr-2">
             <div class="d-flex w-100 justify-content-between">
               <h5 class="mb-1">${todo.title}</h5> 

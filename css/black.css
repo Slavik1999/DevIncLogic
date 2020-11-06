@@ -44,3 +44,11 @@ div.dropdown-menu.show {
 h3 {
 	display: inline-block;
 }
+
+#currentTasks {
+	padding-bottom: 50px;
+}
+
+#completedTasks {
+	padding-bottom: 50px;
+}

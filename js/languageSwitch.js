@@ -170,8 +170,11 @@ function translateTodoPriority(firstLang, secondLang) {
 	});
 
 	addEventsForItems();
+	dragAndDrop();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-	EN_BTN.click();
+	setTimeout(() => {
+		EN_BTN.click();
+	}, 0);
 });
