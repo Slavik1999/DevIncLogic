@@ -13,14 +13,10 @@ const RUS_ARR = [
 	'Низкий',
 	'Средний',
 	'Высокий',
-	'Цвет Задачи',
 	'Закрыть',
 	'Добавить задачу',
-	'Авторизация',
-	'Выйти',
 	'Почта',
 	'Пароль',
-	'Авторизация',
 	'Войти',
 	'Зарегистрироваться',
 	'Светлая',
@@ -42,14 +38,10 @@ const EN_ARR = [
 	'Low',
 	'Medium',
 	'High',
-	'Todo Color',
 	'Close',
 	'Add task',
-	'Authorisation',
-	'Leave',
 	'Email',
 	'Password',
-	'Authorisation',
 	'Log In',
 	'Sign Up',
 	'Light',
@@ -59,8 +51,13 @@ const EN_ARR = [
 	'Delete'
 ];
 
-const RADIO_RUS = [ 'Низкий', 'Средний', 'Высокий' ];
-const RADIO_EN = [ 'Low', 'Medium', 'High' ];
+const lowRadioRus = 'Низкий';
+const mediumRadioRus = 'Средний';
+const highRadioRus = 'Высокий';
+
+const lowRadioEn = 'Low';
+const mediumRadioEn = 'Medium';
+const highRadioEn = 'High';
 
 const usersArr = localStorage.getItem('allUsers') ? JSON.parse(localStorage.getItem('allUsers')) : [];
 
@@ -69,3 +66,7 @@ const EN = 'EN';
 
 const RusActions = [ 'Выполнить', 'Редактировать', 'Удалить' ];
 const EnActions = [ 'Complete', 'Edit', 'Delete' ];
+
+const yellow = 'rgba(221,228,0,0.8)';
+const orange = 'rgba(213,121,18,0.86)';
+const red = 'rgba(208,0,0,0.92)';

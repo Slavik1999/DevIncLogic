@@ -10,12 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	if (JSON.parse(localStorage.getItem('user'))) {
-		leaveBtn.classList.remove('d-none');
-		authBtn.classList.add('d-none');
+	const loggedUser = JSON.parse(localStorage.getItem('user'));
+
+	if (loggedUser) {
+		loginPage.classList.add('d-none');
+		showMainPage(loggedUser);
 
 		allUsers = localStorage.getItem('allUsers') ? JSON.parse(localStorage.getItem('allUsers')) : [];
-		user = JSON.parse(localStorage.getItem('user'));
+		user = loggedUser;
 		todoList = user.todos;
 	}
 

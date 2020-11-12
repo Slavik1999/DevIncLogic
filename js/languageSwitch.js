@@ -3,9 +3,9 @@ RUS_BTN.addEventListener('click', () => {
 
 	translateTodoPriority(EN_ARR, RUS_ARR);
 
-	lowRadioButton.value = 'Низкий';
-	mediumRadioButton.value = 'Средний';
-	highRadioButton.value = 'Высокий';
+	lowRadioButton.value = lowRadioRus;
+	mediumRadioButton.value = mediumRadioRus;
+	highRadioButton.value = highRadioRus;
 
 	translateTodoActions(RUS);
 });
@@ -15,9 +15,9 @@ EN_BTN.addEventListener('click', () => {
 
 	translateTodoPriority(RUS_ARR, EN_ARR);
 
-	lowRadioButton.value = 'Low';
-	mediumRadioButton.value = 'Medium';
-	highRadioButton.value = 'High';
+	lowRadioButton.value = lowRadioEn;
+	mediumRadioButton.value = mediumRadioEn;
+	highRadioButton.value = highRadioEn;
 
 	translateTodoActions(EN);
 });

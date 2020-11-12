@@ -37,7 +37,6 @@ const ExampleModalLabel = document.querySelector('#exampleModalLabel');
 const Title = document.querySelector('#Title');
 const FormText = document.querySelector('#formText');
 const Priority = document.querySelector('#Priority');
-const TodoColor = document.querySelector('#TodoColor');
 const CloseBtn = document.querySelector('#closeBtn');
 const AddTaskBtn = document.querySelector('#addTask');
 const Low = document.querySelector('#LowLabel');
@@ -47,26 +46,37 @@ const authTxt = document.querySelector('#authTxt');
 const leaveTxt = document.querySelector('#leaveTxt');
 const emailTxt = document.querySelector('#Email');
 const passwordTxt = document.querySelector('#Password');
-const authLabel = document.querySelector('#authModalLabel');
 const lightTxt = document.querySelector('#lightTxt');
 const darkTxt = document.querySelector('#darkTxt');
 const RUS_BTN = document.querySelector('#RUS');
 const EN_BTN = document.querySelector('#EN');
 
 // Authorisation
-const inputEmail = document.querySelector('#inputEmail');
-const inputPassword = document.querySelector('#inputPassword');
-const closeAuth = document.querySelector('#closeAuth');
+const loginPage = document.querySelector('#loginPage');
+const registrPage = document.querySelector('#registrPage');
+const mainPage = document.querySelector('#mainPage');
+
+const goToRegistrPage = document.querySelector('#goToRegistrPage');
+const goToLoginPage = document.querySelector('#goToLoginPage');
+
+const loginEmail = document.querySelector('#loginEmail');
+const loginPassword = document.querySelector('#loginPassword');
+
+const registrEmail = document.querySelector('#registrEmail');
+const registrPassword = document.querySelector('#registrPassword');
+const registrNickname = document.querySelector('#registrNickname');
 
 const leaveBtn = document.querySelector('#leaveBtn');
 const authBtn = document.querySelector('#authorisationBtn');
 
-const modalError = document.querySelector('#modalError');
+const registrError = document.querySelector('#registrError');
+const loginError = document.querySelector('#loginError');
 
 const LogInBtn = document.querySelector('#LogIn');
 const SignUpBtn = document.querySelector('#SignUp');
 
-const authForm = document.querySelector('#authForm');
+const loginForm = document.querySelector('#loginForm');
+const registrForm = document.querySelector('#registrForm');
 
 const elementsArr = [
 	MyTodoList,
@@ -80,14 +90,10 @@ const elementsArr = [
 	Low,
 	Medium,
 	High,
-	TodoColor,
 	CloseBtn,
 	AddTaskBtn,
-	authTxt,
-	leaveTxt,
 	emailTxt,
 	passwordTxt,
-	authLabel,
 	LogInBtn,
 	SignUpBtn,
 	lightTxt,

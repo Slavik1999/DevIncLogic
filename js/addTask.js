@@ -24,7 +24,7 @@ addTaskForm.addEventListener('submit', (ev) => {
 				todo.priority = priority ? priority : todo.priority;
 				todo.date = formatDate(new Date());
 				todo.id = idOfEditItem;
-				todo.color = inputColor.value;
+				todo.color = getColor(todo.priority);
 			}
 			return todo;
 		});
@@ -34,7 +34,7 @@ addTaskForm.addEventListener('submit', (ev) => {
 		let newTodo = {
 			title: inputTitle.value,
 			body: inputText.value,
-			color: inputColor.value,
+			color: getColor(priority),
 			completed: false,
 			priority,
 			date: formatDate(new Date()),
@@ -65,9 +65,22 @@ const formatDate = (date) => {
 	let day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
 	let month = date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
 	let year = date.getFullYear();
+
 	return `${hours}:${minutes} ${day}.${month}.${year}`;
 };
 
 const writingTodo = (todo) => {
 	todoList.push(todo);
+};
+
+const getColor = (priority) => {
+	if (priority === lowRadioEn || priority === lowRadioRus) {
+		return yellow;
+	}
+	if (priority === mediumRadioEn || priority === mediumRadioRus) {
+		return orange;
+	}
+	if (priority === highRadioEn || priority === highRadioRus) {
+		return red;
+	}
 };

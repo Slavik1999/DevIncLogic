@@ -33,7 +33,119 @@
     <title>LogicPart</title>
   </head>
   <body>
-    <div class="container-fluid wrapper">
+    <div class="container-fluid wrapper" id='loginPage'>
+      <div class='pt-5 d-flex justify-content-center align-items-center'>
+        <div class="col-6">
+          <div id='loginError'>
+
+          </div>
+
+          <form id="loginForm">
+            <div class="form-group row">
+              <label for="loginEmail" class="col-sm-2 col-form-label" id="Email"
+                >Email</label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="loginEmail"
+                  required=""
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="loginPassword" class="col-sm-2 col-form-label" id="Password"
+                >Password</label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="loginPassword"
+                  required=""
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary" id="LogIn">
+                  Log In
+                </button>
+                <div>
+                  <span class='registrLink' id="goToRegistrPage">Have not account?</span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container-fluid wrapper d-none" id='registrPage'>
+      <div class='pt-5 d-flex justify-content-center align-items-center'>
+        <div class="col-6">
+          <div id='registrError'>
+
+          </div>
+
+          <form id="registrForm">
+            <div class="form-group row">
+              <label for="registrNickname" class="col-sm-2 col-form-label" id="Nickname"
+                >Nickname</label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="registrNickname"
+                  required=""
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="registrEmail" class="col-sm-2 col-form-label" id="Email"
+                >Email</label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="registrEmail"
+                  required=""
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="registrPassword" class="col-sm-2 col-form-label" id="Password"
+                >Password</label
+              >
+              <div class="col-sm-10">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="registrPassword"
+                  required=""
+                />
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary" id="SignUp">
+                  Sign Up
+                </button>
+                <div>
+                  <span class='loginLink' id="goToLoginPage">Have account?</span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid wrapper d-none" id = 'mainPage'>
       <nav class="navbar">
         <h1 id="mainTitle">MyToDoList</h1>
         <div class="d-flex">
@@ -47,7 +159,7 @@
         <div class="d-flex">
           <button
             type="button"
-            class="btn btn-primary"
+            class="btn btn-primary mr-1"
             data-toggle="modal"
             data-target="#exampleModal"
             id="createNewTask"
@@ -57,17 +169,7 @@
           </button>
           <button
             type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#authModal"
-            id="authorisationBtn"
-          >
-            <i class="fa fa-sign-in" aria-hidden="true"></i>
-            <span id="authTxt">Authorisation</span>
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary d-none"
+            class="btn btn-secondary"
             id="leaveBtn"
           >
           <i class="fa fa-sign-out" aria-hidden="true"></i>
@@ -106,7 +208,7 @@
                   <span id="darkTxt">Dark</span>
                 </label>
               </div>
-              <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <div class="btn-group btn-group-toggle mt-1" data-toggle="buttons">
                 <label class="btn btn-secondary">
                   <input
                     type="radio"
@@ -144,78 +246,7 @@
         </div>
       </div>
     </div>
-
-
-    <!-- Modal authorisation-->
-    <div
-    class="modal fade"
-    id="authModal"
-    tabindex="-2"
-    role="dialog"
-    aria-labelledby="authModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="authModalLabel">Authorisation</h5>
-          <button
-            type="button"
-            id="closeAuth"
-            class='close'
-            data-dismiss="modal"
-            aria-label="Close"  
-          >
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div id='modalError'>
-
-        </div>
-        <div class="modal-body">
-          <form id="authForm">
-            <div class="form-group row">
-              <label for="inputEmail" class="col-sm-2 col-form-label" id="Email"
-                >Email</label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="email"
-                  class="form-control"
-                  id="inputEmail"
-                  required=""
-                />
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputPassword" class="col-sm-2 col-form-label" id="Password"
-                >Password</label
-              >
-              <div class="col-sm-10">
-                <input
-                  type="password"
-                  class="form-control"
-                  id="inputPassword"
-                  required=""
-                />
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-12 text-center">
-                <button type="submit" class="btn btn-primary" id="LogIn">
-                  Log In
-                </button>
-                <button type="submit" class="btn btn-primary" id="SignUp">
-                  Sign Up
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
+    
     <!-- Modal -->
     <div
       class="modal fade"
@@ -306,14 +337,6 @@
                       />
                       <label class="form-check-label" for="High" id="HighLabel"> High </label>
                     </div>
-                    <p>
-                      <span id="TodoColor">Todo Color:</span>
-                      <input
-                        data-jscolor="{width:120}"
-                        id="todoColor"
-                        value="rgba(44,175,254,0.5)"
-                      />
-                    </p>
                   </div>
                 </div>
               </fieldset>
@@ -357,7 +380,6 @@
     <script src='./js/updateLocalStorage.js'></script>
     <script src='./js/authorisation.js'></script>
     <script src='./js/themeSwitch.js'></script>
-    <script src="./js/colorPicker.js" ></script>
     <script src="./js/getCounter.js" ></script>
     <script src="./js/deleteInputsValue.js" ></script>
     <script src="./js/printTasks.js" ></script>

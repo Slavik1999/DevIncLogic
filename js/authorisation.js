@@ -1,24 +1,43 @@
-authForm.addEventListener('submit', (ev) => {
+loginForm.addEventListener('submit', (ev) => {
+	ev.preventDefault();
+});
+
+registrForm.addEventListener('submit', (ev) => {
 	ev.preventDefault();
 });
 
 SignUpBtn.addEventListener('click', () => {
 	let errArr = [];
 
-	let loggedUser = usersArr.find((user) => user.email === inputEmail.value);
+	let loggedUser = usersArr.find(
+		(user) => user.nickname === registrNickname.value || user.email === registrEmail.value
+	);
 
 	if (loggedUser) {
-		errArr.push('Такой пользователь уже существует');
+		if (loggedUser.nickname === registrNickname.value) {
+			errArr.push('Пользователь с таким именем уже существует');
+		}
+		if (loggedUser.email === registrEmail.value) {
+			errArr.push('Эта почта занята');
+		}
 	} else {
-		if (inputPassword.value.split('').length < 9) {
+		if (registrPassword.value.split('').length < 9) {
 			errArr.push('Недостаточно длинный пароль');
 		}
 	}
 
 	if (!errArr.length) {
-		const newUser = { email: inputEmail.value, password: inputPassword.value, todos: [] };
+		const newUser = {
+			email: registrEmail.value,
+			password: registrPassword.value,
+			nickname: registrNickname.value,
+			todos: []
+		};
 
 		usersArr.push(newUser);
+
+		registrPage.classList.add('d-none');
+		showMainPage(newUser);
 
 		allUsers = usersArr;
 		user = newUser;
@@ -28,38 +47,28 @@ SignUpBtn.addEventListener('click', () => {
 
 		addEventsForItems();
 		getCounter();
-
-		showBtn(leaveBtn, authBtn);
-
-		closeForm();
 	} else {
-		printErrors(errArr);
+		printErrors(errArr, registrError);
 	}
 });
-
-function showBtn(showedBtn, hidedBtn) {
-	showedBtn.classList.remove('d-none');
-	hidedBtn.classList.add('d-none');
-}
 
 LogInBtn.addEventListener('click', () => {
 	let errArr = [];
 
-	let loggedUser = usersArr.find((user) => user.email === inputEmail.value);
+	let loggedUser = usersArr.find((user) => user.email === loginEmail.value);
 
 	if (loggedUser) {
-		if (loggedUser.password === inputPassword.value) {
+		if (loggedUser.password === loginPassword.value) {
 			localStorage.setItem('user', JSON.stringify(loggedUser));
+
+			loginPage.classList.add('d-none');
+			showMainPage(loggedUser);
 
 			allUsers = JSON.parse(localStorage.getItem('allUsers'));
 			user = loggedUser;
 			todoList = user.todos;
 
 			updateDraggedDisplay();
-
-			showBtn(leaveBtn, authBtn);
-
-			closeForm();
 		} else {
 			errArr.push('Не верный пароль');
 		}
@@ -68,7 +77,7 @@ LogInBtn.addEventListener('click', () => {
 	}
 
 	if (errArr.length) {
-		printErrors(errArr);
+		printErrors(errArr, loginError);
 	}
 });
 
@@ -78,30 +87,51 @@ leaveBtn.addEventListener('click', () => {
 	user = null;
 	todoList = [];
 
-	completedTasks.innerHTML = '';
-	currentTasks.innerHTML = '';
-
+	hideMainPage();
 	addEventsForItems();
 	getCounter();
 
-	showBtn(authBtn, leaveBtn);
+	clearAuthInputs();
 });
 
-function closeForm() {
-	inputEmail.value = '';
-	inputPassword.value = '';
-	closeAuth.click();
+function clearAuthInputs() {
+	registrEmail.value = '';
+	registrPassword.value = '';
+	registrNickname.value = '';
+
+	loginEmail.value = '';
+	loginPassword.value = '';
 }
 
-function printErrors(arr) {
+function printErrors(arr, errorList) {
 	arr.map((err) => {
-		modalError.innerHTML += err + '<br>';
+		errorList.innerHTML += err + '<br>';
 	});
-	clearError();
+	clearError(errorList);
 }
 
-function clearError() {
+goToRegistrPage.addEventListener('click', () => {
+	loginPage.classList.add('d-none');
+	registrPage.classList.remove('d-none');
+});
+
+goToLoginPage.addEventListener('click', () => {
+	loginPage.classList.remove('d-none');
+	registrPage.classList.add('d-none');
+});
+
+function clearError(errorList) {
 	setTimeout(() => {
-		modalError.innerHTML = '';
+		errorList.innerHTML = '';
 	}, 4000);
+}
+
+function showMainPage(loggedUser) {
+	mainPage.classList.remove('d-none');
+	leaveTxt.innerHTML = loggedUser.nickname;
+}
+
+function hideMainPage() {
+	mainPage.classList.add('d-none');
+	loginPage.classList.remove('d-none');
 }

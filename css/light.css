@@ -1,5 +1,5 @@
 .wrapper {
-	min-height: calc(100vh - 15px);
+	min-height: calc(100vh);
 	margin: 0 auto 0;
 }
 .list-group-item.completed {
@@ -16,4 +16,10 @@ h3 {
 
 #completedTasks {
 	padding-bottom: 50px;
+}
+
+.registrLink:hover,
+.loginLink:hover {
+	cursor: pointer;
+	color: blue;
 }

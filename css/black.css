@@ -1,5 +1,5 @@
 .wrapper {
-	min-height: calc(100vh - 15px);
+	min-height: calc(100vh);
 	margin: 0 auto 0;
 	background-color: rgb(26, 25, 25);
 	color: rgb(218, 213, 213);
@@ -51,4 +51,10 @@ h3 {
 
 #completedTasks {
 	padding-bottom: 50px;
+}
+
+.registrLink:hover,
+.loginLink:hover {
+	cursor: pointer;
+	color: blue;
 }

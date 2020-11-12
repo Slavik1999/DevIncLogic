@@ -52,10 +52,9 @@ const getEditEvent = (todo) => {
 
 		inputTitle.value = todo.title;
 		inputText.value = todo.body;
-		lowRadioButton.checked = todo.priority === 'Low' ? true : false;
-		mediumRadioButton.checked = todo.priority === 'Medium' ? true : false;
-		highRadioButton.checked = todo.priority === 'High' ? true : false;
-		inputColor.value = todo.color;
+		lowRadioButton.checked = todo.priority === lowRadioEn || todo.priority === lowRadioRus ? true : false;
+		mediumRadioButton.checked = todo.priority === mediumRadioEn || todo.priority === mediumRadioRus ? true : false;
+		highRadioButton.checked = todo.priority === highRadioEn || todo.priority === highRadioRus ? true : false;
 		idOfEditItem = todo.id;
 		editMode = true;
 	});
