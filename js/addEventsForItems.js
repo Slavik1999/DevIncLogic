@@ -1,5 +1,6 @@
 const addEventsForItems = () => {
 	printTasks();
+
 	todoList.map((todo) => {
 		getEditEvent(todo);
 		getDeleteEvent(todo.id);
@@ -46,15 +47,16 @@ const getDeleteEvent = (idItem) => {
 		getCounter();
 	});
 };
+
 const getEditEvent = (todo) => {
 	document.getElementById(`editButton${todo.id}`).addEventListener('click', () => {
 		createNewTask.click();
 
 		inputTitle.value = todo.title;
 		inputText.value = todo.body;
-		lowRadioButton.checked = todo.priority === lowRadioEn || todo.priority === lowRadioRus ? true : false;
-		mediumRadioButton.checked = todo.priority === mediumRadioEn || todo.priority === mediumRadioRus ? true : false;
-		highRadioButton.checked = todo.priority === highRadioEn || todo.priority === highRadioRus ? true : false;
+		lowRadioButton.checked = todo.priority === lowRadioEn || todo.priority === lowRadioRus;
+		mediumRadioButton.checked = todo.priority === mediumRadioEn || todo.priority === mediumRadioRus;
+		highRadioButton.checked = todo.priority === highRadioEn || todo.priority === highRadioRus;
 		idOfEditItem = todo.id;
 		editMode = true;
 	});

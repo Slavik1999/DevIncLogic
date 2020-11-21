@@ -70,3 +70,9 @@ const EnActions = [ 'Complete', 'Edit', 'Delete' ];
 const yellow = 'rgba(221,228,0,0.8)';
 const orange = 'rgba(213,121,18,0.86)';
 const red = 'rgba(208,0,0,0.92)';
+
+const nameIsRegisteredError = 'Пользователь с таким именем уже существует';
+const emailIsRegisteredError = 'Эта почта занята';
+const notEnoughPasswordLngthError = 'Недостаточно длинный пароль';
+const wrongPasswordError = 'Не верный пароль';
+const thereIsNoSuchUserError = 'Такого пользователя не существует';

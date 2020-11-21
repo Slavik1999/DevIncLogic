@@ -15,14 +15,14 @@ SignUpBtn.addEventListener('click', () => {
 
 	if (loggedUser) {
 		if (loggedUser.nickname === registrNickname.value) {
-			errArr.push('Пользователь с таким именем уже существует');
+			errArr.push(nameIsRegisteredError);
 		}
 		if (loggedUser.email === registrEmail.value) {
-			errArr.push('Эта почта занята');
+			errArr.push(emailIsRegisteredError);
 		}
 	} else {
 		if (registrPassword.value.split('').length < 9) {
-			errArr.push('Недостаточно длинный пароль');
+			errArr.push(notEnoughPasswordLngthError);
 		}
 	}
 
@@ -70,10 +70,10 @@ LogInBtn.addEventListener('click', () => {
 
 			updateDraggedDisplay();
 		} else {
-			errArr.push('Не верный пароль');
+			errArr.push(wrongPasswordError);
 		}
 	} else {
-		errArr.push('Такого пользователя не существует');
+		errArr.push(thereIsNoSuchUserError);
 	}
 
 	if (errArr.length) {
